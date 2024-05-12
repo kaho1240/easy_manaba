@@ -39,20 +39,25 @@ names.forEach(element => {
   } else {
     document.body.appendChild(newTextElement); // ページに既存の要素が存在しない場合は、新しい要素を追加する
   }
-  // document.body.insertBefore(newTextElement);
-  // document.body.insertBefore(newTextElement, document.body.firstChild);
-  // element.style.display = 'none';
-});
 
-//クラス名が "content" の要素を取得
-      // let contentElements = document.querySelectorAll('[class*="教"]');
-      // {
-      // // 各要素のテキストを取得し、配列に追加
-      // for (let i = 0; i < contentElements.length; i++) {
-      //   let text = contentElements[i].textContent;
-      //   texts.push(text);
-      // }
-      // console.log(texts); // ["This is a paragraph with some strong content. This is another paragraph.", "This is a third paragraph."]
-      // }
+});
+fetch("https://ct.ritsumei.ac.jp/ct/course_8317295_report")
+  .then(response => response.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    
+    // border.center クラス内の要素を取得
+    const elements = doc.querySelectorAll(".border.center");
+    
+    // テキストを抽出して表示
+    elements.forEach(element => {
+      const text = element.textContent.trim();
+      console.log(text);
+    });
+  })
+  .catch(error => console.log("Fetch error:", error));
+
+
 
  
