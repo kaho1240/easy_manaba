@@ -4,6 +4,9 @@ let AssignNames=new Array(3);
 let AssignDeadLine=new Array(3);
 let AssignStates=new Array(3);
 let count=0;
+
+let searchString = "未提出";
+
 fetch("https://ct.ritsumei.ac.jp/ct/course_8317295_report")
 .then(response => response.text())
 .then(html => {
@@ -20,20 +23,27 @@ ALLofThem[count]=text;
 // console.log(text);
 count++;
 });
-ShowAll();
+// ShowAll();
+
+
 console.log("")
 console.log("display Name")
 SetNames();
-displayAssignNames();
+// displayAssignNames();
 console.log("-----------")
 
 console.log("DeadLine")
 SetDeadLines();
-displayDeadLines();
+// displayDeadLines();
+// 
 console.log("-----------")
 console.log("AssignStates")
 SetAssignStates();
 displayAssignStates();
+console.log("-----------")
+console.log("whether or not")
+judgeAssignStates()
+
 
 // console.log("DeadLine is"+AssignDeadLine[0] s);
 
@@ -43,7 +53,7 @@ displayAssignStates();
 //全部表示
     function ShowAll() {
         for (let i = 0; i < ALLofThem.length; i++) {
-            console.log(ALLofThem[i])
+            console.log(i+"=  "+ALLofThem[i])
         }  
     }
 
@@ -62,8 +72,7 @@ displayAssignStates();
     }
     function SetAssignStates() {
         for (let j = 0; j < AssignStates.length; j++) {
-            AssignStates[j]=ALLofThem[2+j*4];
-            console.log("Assign"+j+ALLofThem[2+j*4])
+            AssignStates[j]=ALLofThem[1+j*4];
         }  
     }
 
@@ -82,6 +91,13 @@ displayAssignStates();
             console.log("Assign States is"+i+AssignStates[i] );
         }  
     }
+    function judgeAssignStates() {
+        for (let i = 0; i < AssignStates.length; i++) {
+            if (AssignStates[i].includes(searchString)) {
+                console.log(i+"'が未提出'.");
+            } 
+        }  
+}
 
 
 
