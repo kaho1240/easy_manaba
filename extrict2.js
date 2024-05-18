@@ -1,8 +1,8 @@
 // 全部とってくる(変更ばん)
-let ALLofThem = new Array(13);
-let AssignNames=new Array(3);
-let AssignDeadLine=new Array(3);
-let AssignStates=new Array(3);
+var ALLofThem = new Array(13);
+var AssignNames=new Array(3);
+var AssignDeadLine=new Array(3);
+var AssignStates=new Array(3);
 let count=0;
 
 let searchString = "未提出";
@@ -13,7 +13,6 @@ fetch("https://ct.ritsumei.ac.jp/ct/course_8317295_report")
 const parser = new DOMParser();
 const doc = parser.parseFromString(html, "text/html");
 const elements = doc.querySelectorAll(".border.center");
-// const states = doc.querySelectorAll(".border.center");
 
 // テキストを配列に入れる
 elements.forEach(element => {
@@ -23,8 +22,6 @@ ALLofThem[count]=text;
 // console.log(text);
 count++;
 });
-// ShowAll();
-
 
 console.log("")
 console.log("display Name")
@@ -44,8 +41,6 @@ console.log("-----------")
 console.log("whether or not")
 judgeAssignStates()
 
-
-// console.log("DeadLine is"+AssignDeadLine[0] s);
 
 })
 .catch(error => console.log("Fetch error:", error));

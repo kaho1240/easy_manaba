@@ -20,6 +20,7 @@
     "matches": ["https://ct.ritsumei.ac.jp/ct/home_course"],
     "js": ["content_script.js"]
   },
+
   {
     "matches": ["https://ct.ritsumei.ac.jp/ct/course_8317295_report"],
     "js": ["extrict2.js"]
