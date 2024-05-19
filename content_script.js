@@ -1,8 +1,12 @@
 //授業名取得
 let AssignURL = document.querySelectorAll(".courselistweekly-nonborder          courselistweekly-c");
 let classNames = document.querySelectorAll(".course.course-cell");
+let AssignPage= document.querySelectorAll("courseweekly-fav");
+
+
 let Classes=new Array(8);//授業名入れる配列
 let ClassNum=new Array(8);//授業番号入れる配列
+let ClassAssingNum=new Array(8);//授業番号入れる配列
 var ALLofThem = new Array(13);//レポートのページを入れる配列
 var AssignNames=new Array(3);//課題の名前
 var AssignDeadLine=new Array(3);//課題の締切
@@ -12,13 +16,28 @@ let countClass=0;//クラスを数える
 let unSubmitedCount=0;
 let count=0;
 
+// 消さないで
+let elements = document.querySelectorAll(".courseweekly-fav");
+    elements.forEach(element => {
+        let href = element.getAttribute('href'); // href属性を取得
+        if (href) {
+            // console.log(href);
+            ClassAssingNum[countClass] = href;
+            console.log(countClass + "=   " + ClassAssingNum[countClass]);
+            countClass++;
+        }
+    });
+
 //授業の情報を取ってくる
-SearchInfo(classNames)
+console.log("classInfo");
+SearchInfo(classNames,ClassNum)
+console.log("Assign");
+// AssignSearchInfo(AssignPage,ClassAssingNum)
 //宿題の情報をとってくる
 getAssignInfo(317295)
 getAssignInfo(317310)
 
-function  SearchInfo(name){
+function  SearchInfo(name,List){
     name.forEach(element => {
         let text = element.textContent;
         let newTextElement = document.createElement("div"); 
@@ -26,19 +45,57 @@ function  SearchInfo(name){
         const computedStyle = window.getComputedStyle(element);
             //授業のコマ情報を取ってくる
             let ClassText=text.replace(/\s+/g, '');
-            Classes[countClass]=ClassText;
+            List[countClass]=ClassText;
             let classNum = ClassText.slice(0, 5);
-            ClassNum[countClass]=classNum;
-            console.log(countClass+"=   "+Classes[countClass]);
-            console.log(countClass+"=   "+ClassNum[countClass]);
+            List[countClass]=classNum;
+            console.log(countClass+"=   "+List[countClass]);
+            // console.log(countClass+"=   "+List[countClass]);
             countClass++;
             //html上に表示
-    displayOnSite(name,newTextElement)
+            displayOnSite(name,newTextElement)
     });
     let separator = document.createElement("div");
     separator.textContent = "-------";
     document.body.appendChild(separator);
+    countClass=0;
 }
+// function  SearchInfoHerf(name,List){
+//     name.forEach(element => {
+//         let text = element.href;
+//         // let newTextElement = document.createElement("div"); 
+//         // newTextElement.textContent = text.trim();
+//         // const computedStyle = window.getComputedStyle(element);
+//             //授業のコマ情報を取ってくる
+//             let ClassText=text.replace(/\s+/g, '');
+//             List[countClass]=ClassText;
+//             // let classNum = ClassText.slice(0, 5);
+//             // List[countClass]=ClassText;
+//             console.log(countClass+"=   "+List[countClass]);
+//             // console.log(countClass+"=   "+List[countClass]);
+//             countClass++;
+//             // //html上に表示
+//             // displayOnSite(name,newTextElement)
+//     });
+//     let separator = document.createElement("div");
+//     separator.textContent = "-------";
+//     document.body.appendChild(separator);
+//     countClass=0;
+// }
+function SearchInfoHerf(elements, List) {
+    elements.forEach(element => {
+        let href = element.getAttribute('href'); // href属性を取得
+        List[countClass] = href;
+        console.log(countClass + "=   " + List[countClass]);
+        countClass++;
+    });
+
+    let separator = document.createElement("div");
+    separator.textContent = "-------";
+    document.body.appendChild(separator);
+    countClass = 0;
+}
+
+
 //html上に表示
 function  displayOnSite(name,newTextElement){
     let firstChild = document.body.firstChild;
@@ -48,6 +105,7 @@ function  displayOnSite(name,newTextElement){
         document.body.appendChild(newTextElement); // ページに既存の要素が存在しない場合は、新しい要素を追加する
     }
 }
+SearchInfo(AssignPage, ClassAssingNum);
 
 //全部表示
 function ShowAll(ALLofThem) {
