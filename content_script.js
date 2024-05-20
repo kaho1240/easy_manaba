@@ -22,11 +22,19 @@ let elements = document.querySelectorAll(".courseweekly-fav");
         let href = element.getAttribute('href'); // href属性を取得
         if (href) {
             // console.log(href);
-            ClassAssingNum[countClass] = href;
+            let hrefText = href.slice(21, 27);
+            ClassAssingNum[countClass] = hrefText;
+            getAssignInfo(hrefText)
             console.log(countClass + "=   " + ClassAssingNum[countClass]);
             countClass++;
         }
     });
+// href取得
+    for (let i = 0; i < ClassAssingNum.length; i++) {
+        // console.log(ClassAssingNum[i]);
+        getAssignInfo(ClassAssingNum[i]);
+        
+    }   
 
 //授業の情報を取ってくる
 console.log("classInfo");
@@ -34,8 +42,8 @@ SearchInfo(classNames,ClassNum)
 console.log("Assign");
 // AssignSearchInfo(AssignPage,ClassAssingNum)
 //宿題の情報をとってくる
-getAssignInfo(317295)
-getAssignInfo(317310)
+// getAssignInfo(317295)
+// getAssignInfo(317310)
 
 function  SearchInfo(name,List){
     name.forEach(element => {
