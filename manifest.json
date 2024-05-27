@@ -1,12 +1,12 @@
 {
-  "name": "Manaba Extension",
+  "name": "Manaba Extension2",
   "description": "Remove Unnecessary Parts from Tabelog etc.",
   "version": "0.1",
   "manifest_version": 3,
   "content_scripts": [
     {
       "matches": ["https://tabelog.com/*"],
-      "js": ["content_script.js"]
+      "js": ["content_script2.js"]
     },
   {
     "matches": ["https://outlook.office.com/mail/*"],
@@ -18,7 +18,7 @@
   },
   {
     "matches": ["https://ct.ritsumei.ac.jp/ct/home_course"],
-    "js": ["content_script.js"]
+    "js": ["content_script2.js"]
   },
 
   {
