@@ -155,10 +155,3 @@ function getAssignInfo(classAssignNum) {
     })
     .catch(error => console.log("Fetch error:", error));
 }   
-
-
-
-
-
-
-
