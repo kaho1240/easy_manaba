@@ -2,6 +2,8 @@
 
 //授業名取得
 let AssignURL = document.querySelectorAll(".courselistweekly-nonborder          courselistweekly-c");
+let AssignTitle = document.querySelectorAll(".myassignments-title");
+
 let classNames = document.querySelectorAll(".course.course-cell");
 let AssignPage= document.querySelectorAll("courseweekly-fav");
 
@@ -46,13 +48,13 @@ SearchInfo(classNames, ClassNumArray)//時間割取得
 console.log("Assign");
 // AssignSearchInfo(AssignPage,ClassAssingNum)
 //宿題の情報をとってくる
-getAssignInfo(374977)//スポーツのサイエンス
-// getAssignInfo(317310)//実世界実験
-getAssignInfo(317331)//機械学習
-getAssignInfo(317349)//心理物理
+// getAssignInfo(374977)//スポーツのサイエンス
+// // getAssignInfo(317310)//実世界実験
+// getAssignInfo(317331)//機械学習
+// getAssignInfo(317349)//心理物理
 
-getAssignInfo(317100)//ソフトウェア
-getAssignInfo(317349)
+// getAssignInfo(317100)//ソフトウェア
+getAssignInfo()
 // SetNames(AssignNames, ALLofThem);
     // SetDeadLines();//締め切り取得
 
@@ -98,10 +100,10 @@ SearchInfo(AssignPage, ClassAssingNum);
         if (ALLofThem[i] !== undefined && ALLofThem[1+i] !== null) {
                 AssignStates[i / 4]=ALLofThem[1+i];
         }
-        console.log("Assing is" + i/4+ "    " + AssignNames[i/4]);
-        console.log("Assing is" + i/4+ "    " + AssignDeadLine[i / 4]);
-        console.log("Assing is" + i/4+ "    " + AssignStates[i / 4]);
-        console.log("")
+        // console.log("Assing is" + i/4+ "    " + AssignNames[i/4]);
+        // console.log("Assing is" + i/4+ "    " + AssignDeadLine[i / 4]);
+        // console.log("Assing is" + i/4+ "    " + AssignStates[i / 4]);
+        // console.log("")
         // callNum++;
             }
         setnameCount++;
@@ -164,29 +166,23 @@ function showAssignStates() {
         } 
     }   
 
-function getAssignInfo(classAssignNum) {//②レポートページをとってくる
-  fetch("https://ct.ritsumei.ac.jp/ct/course_8"+classAssignNum+"_report")
+function getAssignInfo() {//②レポートページをとってくる
+  fetch("https://ct.ritsumei.ac.jp/ct/home_summary_report")
     .then(response => response.text())
     .then(html => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-        const elements = doc.querySelectorAll(".border.center");
+        const elements1 = doc.querySelectorAll(".myassignments-title");
 
         // テキストを配列に入れる
-        elements.forEach(element => {
+        elements1.forEach(element => {
             const text = element.textContent.trim();
-            ALLofThem[count]=text;
+            AssignNames[count]=text;
+            console.log(AssignNames[count])
             count++;
         });
-
-    SetNames(AssignNames, ALLofThem);
-
-    // // SetDeadLines();//締め切り取得
-    // // SetAssignStates();//未提出かどうか
-
-    // judgeAssignStates(classAssignNum)
+        
     })
     .catch(error => console.log("Fetch error:", error));
-
 }   
 // showAssignStates()
