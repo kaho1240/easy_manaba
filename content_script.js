@@ -1,22 +1,27 @@
+//ファイルを分けれません！！
+
 //授業名取得
 let AssignURL = document.querySelectorAll(".courselistweekly-nonborder          courselistweekly-c");
 let classNames = document.querySelectorAll(".course.course-cell");
 let AssignPage= document.querySelectorAll("courseweekly-fav");
 
 //必要なオブジェクト
-let Classes=new Array(8);//授業名入れる配列
-let ClassNumArray=new Array(8);//授業番号入れる配列
-let ClassAssingNum=new Array(8);//href授業番号入れる配列
-var ALLofThem = new Array(13);//レポートのページを入れる配列
-var AssignNames=new Array(3);//課題の名前
-var AssignDeadLine=new Array(3);//課題の締切
-var AssignStates=new Array(3);//課題提出状況
+let Classes=new Array(9);//授業名入れる配列
+let ClassNumArray=new Array(9);//授業番号入れる配列
+let ClassAssingNum=new Array(9);//href授業番号入れる配列
+var ALLofThem = new Array(80);//レポートのページを入れる配列
+ var AssignNames=new Array(15);//課題の名前
+var AssignDeadLine=new Array(15);//課題の締切
+var AssignStates=new Array(15);//課題提出状況
 var unSubmitted = new Array(3).fill(null).map(() => new Array(3));
+
 let countClass=0;//クラスを数える
-let unSubmitedCount=0;
+let unSubmitedCount=0;//未提出の宿題
 let count=0;
 let unsubCount=0;
 let callNum=0;
+
+let setnameCount=0;
 // unSubmitted[unSubmitedCount] = [];//配列を作成
 
 // クラスからhrefを取得する
@@ -44,29 +49,33 @@ console.log("Assign");
 getAssignInfo(374977)//スポーツのサイエンス
 // getAssignInfo(317310)//実世界実験
 getAssignInfo(317331)//機械学習
+getAssignInfo(317349)//心理物理
 
-function  SearchInfo(name,List){
+getAssignInfo(317100)//ソフトウェア
+getAssignInfo(317349)
+// SetNames(AssignNames, ALLofThem);
+    // SetDeadLines();//締め切り取得
+
+function  SearchInfo(name,List){//①授業名をとってくる
     name.forEach(element => {
         let text = element.textContent;
         let newTextElement = document.createElement("div"); 
         newTextElement.textContent = text.trim();
         const computedStyle = window.getComputedStyle(element);
-            //授業のコマ情報を取ってくる
-            let ClassText=text.replace(/\s+/g, '');
+            let ClassText=text.replace(/\s+/g, '');//授業名＋教室
             List[countClass]=ClassText;
             console.log(ClassText);
             countClass++;
-            //html上に表示
-            displayOnSite(name,newTextElement)
+            displayOnSite(name,newTextElement)//html上に表示
     });
     let separator = document.createElement("div");
     separator.textContent = "-------";
     document.body.appendChild(separator);
-    countClass=0;
+    console.log(countClass)
 }
 
 //html上に表示
-function  displayOnSite(name,newTextElement){
+function  displayOnSite(name,newTextElement){//①で呼び出す物(変更必要なし)
     let firstChild = document.body.firstChild;
     if (firstChild) {
         document.body.insertBefore(newTextElement, firstChild);
@@ -78,10 +87,29 @@ SearchInfo(AssignPage, ClassAssingNum);
 
 //配列に分ける
     function SetNames() {
-        for (let i = 0; i < ALLofThem.length; i=i+4) {
-            AssignNames[i/4]=ALLofThem[i];
+        console.log("Setname count   "+setnameCount)
+        for (let i = callNum*4; i < ALLofThem.length; i=i+4) {
+            if (ALLofThem[i] !== undefined && ALLofThem[i] !== null) {
+                AssignNames[i / 4] = ALLofThem[i];
+            
+            if (ALLofThem[i] !== undefined && ALLofThem[3+i] !== null) {
+                AssignDeadLine[i / 4]=ALLofThem[3+i];
         }
-    }function SetDeadLines() {
+        if (ALLofThem[i] !== undefined && ALLofThem[1+i] !== null) {
+                AssignStates[i / 4]=ALLofThem[1+i];
+        }
+        console.log("Assing is" + i/4+ "    " + AssignNames[i/4]);
+        console.log("Assing is" + i/4+ "    " + AssignDeadLine[i / 4]);
+        console.log("Assing is" + i/4+ "    " + AssignStates[i / 4]);
+        console.log("")
+        // callNum++;
+            }
+        setnameCount++;
+        // callNum++;
+    }
+    callNum++;
+}
+    function SetDeadLines() {
         for (let j = 0; j < AssignNames.length; j++) {
             AssignDeadLine[j]=ALLofThem[3+j*4];
         }  
@@ -89,27 +117,32 @@ SearchInfo(AssignPage, ClassAssingNum);
         for (let j = 0; j < AssignStates.length; j++) {
             AssignStates[j]=ALLofThem[1+j*4];
         }  
-    }function display(array) {
+    }
+    
+    function display(array) {
         for (let i = 0; i < array.length; i++) {
             console.log("Assing is"+i+"    "+array[i] );
         }  
     }
 
+
+
 function judgeAssignStates(num) {
-    unSubmitted[unSubmitedCount] = [];//配列を作成
-    console.log(num)
-    for (let i = callNum; i < AssignStates.length; i++) {
-        let firstChild = document.body.firstChild;
-        let brNode1 = document.createElement("br");
+    unSubmitted[8] = [];//配列を作成
+    // console.log(num)
+    for (let i = 0; i < AssignStates.length; i++) {
+        // let firstChild = document.body.firstChild;
+        // let brNode1 = document.createElement("br");
         if (AssignStates[i] !== undefined && AssignStates[i].includes("未提出")) {
             unSubmitted[unsubCount][0] = AssignNames[i];
             unSubmitted[unsubCount][1] = AssignDeadLine[i];
-            console.log(callNum)
-            console.log(unSubmitted[unsubCount][0])
-            console.log(unSubmitted[unsubCount][1])
+            // console.log(unsubCount)
+            // console.log(unSubmitted[unsubCount][0])
+            // console.log(unSubmitted[unsubCount][1])
+            unsubCount++;
         } 
     }  
-    callNum++;
+    // callNum++;
 } 
 
 function showAssignStates() {
@@ -130,9 +163,8 @@ function showAssignStates() {
             document.body.insertBefore(brNode1, firstChild);
         } 
     }   
-showAssignStates()
 
-function getAssignInfo(classAssignNum) {
+function getAssignInfo(classAssignNum) {//②レポートページをとってくる
   fetch("https://ct.ritsumei.ac.jp/ct/course_8"+classAssignNum+"_report")
     .then(response => response.text())
     .then(html => {
@@ -147,11 +179,14 @@ function getAssignInfo(classAssignNum) {
             count++;
         });
 
-    SetNames();//課題名取得
-    SetDeadLines();//締め切り取得
-    SetAssignStates();//未提出かどうか
+    SetNames(AssignNames, ALLofThem);
 
-    judgeAssignStates(classAssignNum)
+    // // SetDeadLines();//締め切り取得
+    // // SetAssignStates();//未提出かどうか
+
+    // judgeAssignStates(classAssignNum)
     })
     .catch(error => console.log("Fetch error:", error));
+
 }   
+// showAssignStates()

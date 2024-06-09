@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": ["https://tabelog.com/*"],
-      "js": ["content_script2.js"]
+      "js": ["content_script.js"]
     },
   {
     "matches": ["https://outlook.office.com/mail/*"],
@@ -18,7 +18,11 @@
   },
   {
     "matches": ["https://ct.ritsumei.ac.jp/ct/home_course"],
-    "js": ["content_script2.js"]
+    "js": ["content_script.js"]
+  },
+  {
+    "matches": ["https://ct.ritsumei.ac.jp/ct/home_course"],
+    "js": ["extrict.js"]
   },
 
   {
