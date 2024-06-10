@@ -175,14 +175,51 @@ function getAssignInfo() {//②レポートページをとってくる
         const elements1 = doc.querySelectorAll(".myassignments-title");
 
         // テキストを配列に入れる
-        elements1.forEach(element => {
+        elements1.forEach(element => {//この中は触らない
             const text = element.textContent.trim();
             AssignNames[count]=text;
-            console.log(AssignNames[count])
+            // console.log(AssignNames[count])
             count++;
         });
+        count=0;
+        console.log("")
+        console.log("")
         
     })
     .catch(error => console.log("Fetch error:", error));
-}   
-// showAssignStates()
+} 
+let showCount=0;
+function getDateElements() {
+    // レポートページを取得
+    fetch("https://ct.ritsumei.ac.jp/ct/home_summary_report")
+      .then(response => response.text())
+      .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+  
+          // ページからすべての<td>要素を取得
+          const dateElements = doc.querySelectorAll("td");
+          // 取得した要素から日付のテキストを処理
+          dateElements.forEach(td => {
+              const text = td.textContent.trim();
+              let ClassText = text.replace(/\s+/g, '');
+              if (ClassText.length != 0&&!ClassText.includes("帆")) {
+                if(showCount%3==0){
+                    console.log("");
+                  }
+                  console.log(ClassText);
+                  showCount++;
+
+              }
+              // 日付と時間の形式をチェック (例: 2024-06-12 14:40)
+              if (/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(ClassText)) {
+                  console.log("Date found: " + ClassText);
+              }
+          });
+      })
+      .catch(error => console.log("Fetch error:", error));
+  }
+  
+  // 関数を呼び出す
+  getDateElements();
+  
