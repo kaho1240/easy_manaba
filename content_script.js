@@ -66,7 +66,7 @@ function  SearchInfo(name,List){//①授業名をとってくる
         const computedStyle = window.getComputedStyle(element);
             let ClassText=text.replace(/\s+/g, '');//授業名＋教室
             List[countClass]=ClassText;
-            console.log(ClassText);
+            // console.log(ClassText);
             countClass++;
             displayOnSite(name,newTextElement)//html上に表示
     });
@@ -100,14 +100,8 @@ SearchInfo(AssignPage, ClassAssingNum);
         if (ALLofThem[i] !== undefined && ALLofThem[1+i] !== null) {
                 AssignStates[i / 4]=ALLofThem[1+i];
         }
-        // console.log("Assing is" + i/4+ "    " + AssignNames[i/4]);
-        // console.log("Assing is" + i/4+ "    " + AssignDeadLine[i / 4]);
-        // console.log("Assing is" + i/4+ "    " + AssignStates[i / 4]);
-        // console.log("")
-        // callNum++;
             }
         setnameCount++;
-        // callNum++;
     }
     callNum++;
 }
