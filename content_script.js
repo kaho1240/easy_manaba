@@ -57,8 +57,34 @@ function displayArrayOnSite2(array) {
         // 新しいテキストノードを作成
         let newTextElement = document.createElement('div');
         newTextElement.textContent = element;
-        newTextElement.style.color = getRandomColor(AssignDeadLine); 
+
+        // for(i=0;i < array.length;i++){
+            let character=element;
+            let firstChar =character.charAt(2);
+            let secondChar =character.charAt(1);
+            if(firstChar=="日"){
+                if(character.substr(0, 2)<30){
+                    console.log(character.substr(0, 3))
+                    newTextElement.style.color = 'blue';
+                }else{
+                    // console.log(character.substr(0, 2))
+                    newTextElement.style.color = 'orange';
+                }
+
+            }else if(secondChar=="日"){
+                newTextElement.style.color = 'red'
+            }
         
+        //     // let firstChar = character[0]; 
+        //     let word = array[i];
+        //     let firstChar = word.charAt(0); // 各文字列の最初の文字を取得
+        
+           
+            // if(firstChar[i]<=3){
+            //     newTextElement.style.color = 'red';
+            // }
+        // }
+
         
         // テキストノードをHTMLに表示
         displayOnSite(element,newTextElement);
@@ -79,6 +105,7 @@ function Elements() {
           dateElements.forEach(td => {
               const ClassText = td.textContent.trim();
             //   let ClassText = text.replace(/\s+/g, '');
+
               if (ClassText.length != 0&&!ClassText.includes("帆")) {
                 if(showCount%3==0){
                     AssignNames[showCount/3]=ClassText
@@ -90,11 +117,9 @@ function Elements() {
                     let DateString=parseDate(ClassText)
                     console.log(DateString)
                     const timeDifference=DateString-currentTIme
-                    days= Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // 日数単位での差分
-                    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                    AssignDeadLine[unSubmitedCount]=  `${days}日 ${hours}時間 ${minutes}分`
-                    
+                    // DateChange(timeDifference)
+                    AssignDeadLine[unSubmitedCount]=DateChange(timeDifference);
+                    // Elements(timeDifference)                   
                 }
                   showCount++;
               }
@@ -118,6 +143,13 @@ function Elements() {
       })
       .catch(error => console.log("Fetch error:", error));
   }
+  function DateChange(date) {
+    const days = Math.ceil(date / (1000 * 60 * 60 * 24)); // 日数単位での差分
+    const hours = Math.floor((date % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((date % (1000 * 60 * 60)) / (1000 * 60));
+    return `${days}日 ${hours}時間 ${minutes}分`;
+}
+
   
   // 関数を呼び出す
   Elements();
@@ -127,7 +159,7 @@ function Elements() {
     const now = new Date();
     return now
 }
-displayCurrentTime(array)
+displayCurrentTime()
 function getRandomColor() {
     let letters = '0123456789ABCDEF';
     let color = '#';
@@ -136,3 +168,7 @@ function getRandomColor() {
     }
     return color;
 }
+function isNumericString(str) {
+    return !isNaN(parseFloat(str)) && isFinite(str);
+}
+
